@@ -1,0 +1,29 @@
+
+.card {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+}
+
+.list {
+    padding: 0;
+}
+
+.listItem {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.icon {
+    color: #1976d2;
+}
+
+.text {
+    flex-grow: 1;
+}
+
+.checkbox {
+    color: #1976d2;
+}
