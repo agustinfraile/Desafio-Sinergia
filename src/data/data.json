@@ -1,0 +1,43 @@
+{
+    "products": [
+        {
+            "name": "Producto A",
+            "price": 700000
+        },
+        {
+            "name": "Producto B",
+            "price": 900000
+        },
+        {
+            "name": "Producto C",
+            "price": 1100000
+        },
+        {
+            "name": "Producto D",
+            "price": 1300000
+        },
+        {
+            "name": "Producto E",
+            "price": 1500000
+        },
+        {
+            "name": "Producto F",
+            "price": 1700000
+        },
+        {
+            "name": "Producto J",
+            "price": 1900000
+        },
+        {
+            "name": "Producto H",
+            "price": 2100000
+        }
+    ],
+    "commissions": {
+        "10": 0.10,
+        "15": 0.15,
+        "20": 0.20,
+        "35": 0.35,
+        "40": 0.40
+    }
+}
