@@ -1,0 +1,72 @@
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 0;
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    max-width: 100%;
+}
+
+.card:hover {
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.icon {
+    color: #6c757d;
+}
+
+.progressContainer {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.progressLabel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.progressBar {
+    height: 10px !important;
+    border-radius: 5px;
+}
+
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    text-align: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.dataBox {
+    width: 90%;
+
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+@media (min-width: 768px) {
+    .grid {
+        flex-direction: column;
+
+        align-items: center;
+    }
+}

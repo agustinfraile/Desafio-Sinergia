@@ -1,18 +1,29 @@
-import { useState } from "react";
-import { TextField, FormControl, InputLabel, Select, MenuItem, Button, Grid, Card, CardContent } from "@mui/material";
+import { useState, useEffect } from "react";
+import { TextField, FormControl, InputLabel, Select, MenuItem, Grid, Card, CardContent, Button } from "@mui/material";
+import { Calendar } from "lucide-react";
 import data from "../../data/data.json";
 import styles from "./ComissionForm.module.css";
 
-const ComissionForm = ({ onUpdateUserData, setActiveSection }) => {
-    const [userData, setUserData] = useState({
-        name: "",
-        month: "Marzo",
-        avgTicket: 100,
-        exchangeRate: 1,
-        currentSales: 0,
-        monthlyGoal: 10000,
-        commissionRate: "15",
+const ComissionForm = ({ onUpdateUserData, setActiveSection, getCurrentMonth }) => {
+
+    const [userData, setUserData] = useState(() => {
+        const savedData = localStorage.getItem("userData");
+        return savedData
+            ? JSON.parse(savedData)
+            : {
+                name: "",
+                month: getCurrentMonth(),
+                avgTicket: 100,
+                exchangeRate: 1,
+                currentSales: 0,
+                monthlyGoal: 10000,
+                commissionRate: "15",
+            };
     });
+
+    useEffect(() => {
+        localStorage.setItem("userData", JSON.stringify(userData));
+    }, [userData]);
 
     const months = [
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -29,13 +40,19 @@ const ComissionForm = ({ onUpdateUserData, setActiveSection }) => {
         setActiveSection("progress");
     };
 
-
     return (
         <Card variant="outlined" className={styles.card}>
             <CardContent>
-                <form onSubmit={handleSubmit} className={styles.form}>
-                    <TextField fullWidth label="Nombre" name="name" value={userData.name} onChange={handleChange} className={styles.inputField} />
+                
+                <div className={styles.header}>
+                    <Calendar size={20} className={styles.icon} />
+                    <h3>Información del Usuario</h3>
+                </div>
 
+                <form className={styles.form} onSubmit={handleSubmit}>
+                    <TextField fullWidth label="Tu Nombre" name="name" value={userData.name} onChange={handleChange} className={styles.inputField} />
+
+                    
                     <FormControl fullWidth className={styles.inputField}>
                         <InputLabel>Mes</InputLabel>
                         <Select name="month" value={userData.month} onChange={handleChange}>
@@ -45,11 +62,26 @@ const ComissionForm = ({ onUpdateUserData, setActiveSection }) => {
                         </Select>
                     </FormControl>
 
-                    <TextField fullWidth label="Ticket Promedio ($)" name="avgTicket" value={userData.avgTicket} onChange={handleChange} required className={styles.inputField} />
-                    <TextField fullWidth label="Tasa de Cambio" name="exchangeRate" value={userData.exchangeRate} onChange={handleChange} required className={styles.inputField} />
-                    <TextField fullWidth label="Ventas Actuales ($)" name="currentSales" value={userData.currentSales} onChange={handleChange} required className={styles.inputField} />
-                    <TextField fullWidth label="Meta Mensual ($)" name="monthlyGoal" value={userData.monthlyGoal} onChange={handleChange} required className={styles.inputField} />
+                    
+                    <Grid container spacing={2} className={styles.gridContainer}>
+                        <Grid item className={styles.gridItem}>
+                            <TextField fullWidth label="Ticket Promedio ($)" name="avgTicket" value={userData.avgTicket} onChange={handleChange} className={styles.inputField} />
+                        </Grid>
+                        <Grid item className={styles.gridItem}>
+                            <TextField fullWidth label="Tasa de Cambio" name="exchangeRate" value={userData.exchangeRate} onChange={handleChange} className={styles.inputField} />
+                        </Grid>
+                    </Grid>
 
+                    <Grid container spacing={2} className={styles.gridContainer}>
+                        <Grid item className={styles.gridItem}>
+                            <TextField fullWidth label="Ventas Actuales ($)" name="currentSales" value={userData.currentSales} onChange={handleChange} className={styles.inputField} />
+                        </Grid>
+                        <Grid item className={styles.gridItem}>
+                            <TextField fullWidth label="Meta Mensual ($)" name="monthlyGoal" value={userData.monthlyGoal} onChange={handleChange} className={styles.inputField} />
+                        </Grid>
+                    </Grid>
+
+                    
                     <FormControl fullWidth className={styles.inputField}>
                         <InputLabel>Porcentaje de Comisión (%)</InputLabel>
                         <Select name="commissionRate" value={userData.commissionRate} onChange={handleChange}>
@@ -63,7 +95,6 @@ const ComissionForm = ({ onUpdateUserData, setActiveSection }) => {
                         Guardar Datos
                     </Button>
 
-
                 </form>
             </CardContent>
         </Card>
@@ -71,3 +102,5 @@ const ComissionForm = ({ onUpdateUserData, setActiveSection }) => {
 };
 
 export default ComissionForm;
+
+
