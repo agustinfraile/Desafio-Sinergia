@@ -17,7 +17,7 @@ const ComissionForm = ({ onUpdateUserData, setActiveSection, getCurrentMonth }) 
                 exchangeRate: 1,
                 currentSales: 0,
                 monthlyGoal: 10000,
-                commissionRate: "15",
+                commissionRate: 15,
             };
     });
 
