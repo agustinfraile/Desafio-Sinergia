@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Grid, Box, LinearProgress } from "@mui/material";
+import { Card, CardContent, Typography, Grid2, Box, LinearProgress } from "@mui/material";
 import { TrendingUp } from "lucide-react";
 import styles from "./ProgressSection.module.css";
 
@@ -42,23 +42,23 @@ const ProgressSection = ({ userData }) => {
         </Box>
 
         <div className={styles.grid}>
-          <Grid item className={styles.dataBox}>
+          <Grid2 item className={styles.dataBox}>
             <Typography variant="body2" color="textSecondary">
               Porcentaje de Comisión
             </Typography>
             <Typography variant="h5" className={styles.highlight}>
               {commissionRate}%
             </Typography>
-          </Grid>
+          </Grid2>
 
-          <Grid item className={styles.dataBox}>
+          <Grid2 item className={styles.dataBox}>
             <Typography variant="body2" color="textSecondary">
               Comisión Ganada
             </Typography>
             <Typography variant="h5" className={styles.highlight}>
               ${earnedCommission}
             </Typography>
-          </Grid>
+          </Grid2>
         </div>
       </CardContent>
     </Card>

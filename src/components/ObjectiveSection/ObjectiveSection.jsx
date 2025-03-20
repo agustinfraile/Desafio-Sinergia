@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
+import { Card, CardContent, Typography, Grid2, Box } from "@mui/material";
 import { Target } from "lucide-react";
 import styles from "./ObjectivesSection.module.css";
 
@@ -22,8 +22,8 @@ const ObjectivesSection = ({ userData }) => {
         </Box>
 
        
-        <Grid container spacing={1} className={styles.grid}>
-          <Grid item className={styles.dataBox}>
+        <Grid2 container spacing={1} className={styles.grid2}>
+          <Grid2 item className={styles.dataBox}>
             <Typography variant="body2" color="textSecondary">
               Ventas Restantes
             </Typography>
@@ -33,9 +33,9 @@ const ObjectivesSection = ({ userData }) => {
             <Typography variant="body2" color="textSecondary">
               ≈ {remainingSalesLocal.toLocaleString()} moneda local
             </Typography>
-          </Grid>
+          </Grid2>
 
-          <Grid item className={styles.dataBox}>
+          <Grid2 item className={styles.dataBox}>
             <Typography variant="body2" color="textSecondary">
               Unidades a Vender
             </Typography>
@@ -45,8 +45,8 @@ const ObjectivesSection = ({ userData }) => {
             <Typography variant="body2" color="textSecondary">
               @ ${avgTicket.toLocaleString()} cada una
             </Typography>
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
 
        
         <Box
