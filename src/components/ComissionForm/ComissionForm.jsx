@@ -1,19 +1,29 @@
-import { useState } from "react";
-import { TextField, FormControl, InputLabel, Select, MenuItem, Button, Grid2, Card, CardContent } from "@mui/material";
+import { useState, useEffect } from "react";
+import { TextField, FormControl, InputLabel, Select, MenuItem, Grid, Card, CardContent, Button } from "@mui/material";
+import { Calendar } from "lucide-react";
 import data from "../../data/data.json";
 import styles from "./ComissionForm.module.css";
 
+const ComissionForm = ({ onUpdateUserData, setActiveSection, getCurrentMonth }) => {
 
-const ComissionForm = ({ onUpdateUserData }) => {
-    const [userData, setUserData] = useState({
-        name: "",
-        month: "Marzo",
-        avgTicket: 100,
-        exchangeRate: 1,
-        currentSales: 0,
-        monthlyGoal: 10000,
-        commissionRate: "15", 
+    const [userData, setUserData] = useState(() => {
+        const savedData = localStorage.getItem("userData");
+        return savedData
+            ? JSON.parse(savedData)
+            : {
+                name: "",
+                month: getCurrentMonth(),
+                avgTicket: 100,
+                exchangeRate: 1,
+                currentSales: 0,
+                monthlyGoal: 10000,
+                commissionRate: "15",
+            };
     });
+
+    useEffect(() => {
+        localStorage.setItem("userData", JSON.stringify(userData));
+    }, [userData]);
 
     const months = [
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -27,16 +37,23 @@ const ComissionForm = ({ onUpdateUserData }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         onUpdateUserData(userData);
+        setActiveSection("progress");
     };
 
     return (
         <Card variant="outlined" className={styles.card}>
             <CardContent>
-                <form onSubmit={handleSubmit} className={styles.form}>
-                    <TextField fullWidth label="Nombre" name="name" value={userData.name} onChange={handleChange} required />
+                
+                <div className={styles.header}>
+                    <Calendar size={20} className={styles.icon} />
+                    <h3>Información del Usuario</h3>
+                </div>
 
-    
-                    <FormControl fullWidth>
+                <form className={styles.form} onSubmit={handleSubmit}>
+                    <TextField fullWidth label="Tu Nombre" name="name" value={userData.name} onChange={handleChange} className={styles.inputField} />
+
+                    
+                    <FormControl fullWidth className={styles.inputField}>
                         <InputLabel>Mes</InputLabel>
                         <Select name="month" value={userData.month} onChange={handleChange}>
                             {months.map((month) => (
@@ -45,17 +62,27 @@ const ComissionForm = ({ onUpdateUserData }) => {
                         </Select>
                     </FormControl>
 
-                    <Grid2 container spacing={2}>
-                        <Grid2 item xs={6}><TextField fullWidth label="Ticket Promedio ($)" name="avgTicket" value={userData.avgTicket} onChange={handleChange} required /></Grid2>
-                        <Grid2 item xs={6}><TextField fullWidth label="Tasa de Cambio" name="exchangeRate" value={userData.exchangeRate} onChange={handleChange} required /></Grid2>
-                    </Grid2>
+                    
+                    <Grid container spacing={2} className={styles.gridContainer}>
+                        <Grid item className={styles.gridItem}>
+                            <TextField fullWidth label="Ticket Promedio ($)" name="avgTicket" value={userData.avgTicket} onChange={handleChange} className={styles.inputField} />
+                        </Grid>
+                        <Grid item className={styles.gridItem}>
+                            <TextField fullWidth label="Tasa de Cambio" name="exchangeRate" value={userData.exchangeRate} onChange={handleChange} className={styles.inputField} />
+                        </Grid>
+                    </Grid>
 
-                    <Grid2 container spacing={2}>
-                        <Grid2 item xs={6}><TextField fullWidth label="Ventas Actuales ($)" name="currentSales" value={userData.currentSales} onChange={handleChange} required /></Grid2>
-                        <Grid2 item xs={6}><TextField fullWidth label="Meta Mensual ($)" name="monthlyGoal" value={userData.monthlyGoal} onChange={handleChange} required /></Grid2>
-                    </Grid2>
+                    <Grid container spacing={2} className={styles.gridContainer}>
+                        <Grid item className={styles.gridItem}>
+                            <TextField fullWidth label="Ventas Actuales ($)" name="currentSales" value={userData.currentSales} onChange={handleChange} className={styles.inputField} />
+                        </Grid>
+                        <Grid item className={styles.gridItem}>
+                            <TextField fullWidth label="Meta Mensual ($)" name="monthlyGoal" value={userData.monthlyGoal} onChange={handleChange} className={styles.inputField} />
+                        </Grid>
+                    </Grid>
 
-                    <FormControl fullWidth>
+                    
+                    <FormControl fullWidth className={styles.inputField}>
                         <InputLabel>Porcentaje de Comisión (%)</InputLabel>
                         <Select name="commissionRate" value={userData.commissionRate} onChange={handleChange}>
                             {Object.keys(data.commissions).map((key) => (
@@ -64,12 +91,16 @@ const ComissionForm = ({ onUpdateUserData }) => {
                         </Select>
                     </FormControl>
 
-                    <Button variant="contained" color="primary" type="submit" className={styles.submitButton}>Guardar Datos</Button>
+                    <Button variant="contained" sx={{ backgroundColor: "#28a745", color: "white", "&:hover": { backgroundColor: "#218838" } }} type="submit">
+                        Guardar Datos
+                    </Button>
+
                 </form>
             </CardContent>
         </Card>
     );
 };
 
+export default ComissionForm;
 
-export default ComissionForm
+

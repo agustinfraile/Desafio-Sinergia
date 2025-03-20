@@ -1,28 +1,65 @@
-import { Card, CardContent, CardHeader, Typography, LinearProgress, Grid } from "@mui/material";
-import { DollarSign } from "lucide-react";
+import { Card, CardContent, Typography, Grid, Box, LinearProgress } from "@mui/material";
+import { TrendingUp } from "lucide-react";
 import styles from "./ProgressSection.module.css";
 
 const ProgressSection = ({ userData }) => {
   const { currentSales, monthlyGoal, commissionRate } = userData;
 
-  const progress = Math.min((currentSales / monthlyGoal) * 100, 100); // Asegurar que no pase de 100%
-  const commissionEarned = (currentSales * (commissionRate / 100)).toFixed(2);
+  const progress = Math.min((currentSales / monthlyGoal) * 100, 100);
+  
+  const earnedCommission = (currentSales * (commissionRate / 100)).toFixed(2);
+
+  let progressColor;
+  if (progress < 30) {
+    progressColor = "#ff4d4f"; 
+  } else if (progress < 80) {
+    progressColor = "#f1c40f"; 
+  } else {
+    progressColor = "#2ecc71"; 
+  }
 
   return (
     <Card variant="outlined" className={styles.card}>
-      <CardHeader title={<><DollarSign size={18} /> Progreso</>} />
       <CardContent>
-        <LinearProgress variant="determinate" value={progress} className={styles.progressBar} />
-        <Grid container spacing={2} className={styles.progressInfo}>
-          <Grid item xs={6}>
-            <Typography variant="body2" color="textSecondary">Progreso</Typography>
-            <Typography variant="h6">{progress.toFixed(2)}%</Typography>
+        <Box display="flex" alignItems="center" className={styles.header}>
+          <TrendingUp size={20} className={styles.icon} />
+          <Typography variant="h6" sx={{ fontWeight: "bold", marginLeft: 1 }}>
+            Simulador de Comisiones
+          </Typography>
+        </Box>
+
+        <Box className={styles.progressContainer}>
+          <div className={styles.progressLabel}>
+            <Typography variant="body2">Progreso</Typography>
+            <Typography variant="body2">{progress.toFixed(1)}%</Typography>
+          </div>
+          <LinearProgress
+            variant="determinate"
+            value={progress}
+            className={styles.progressBar}
+            sx={{ backgroundColor: "#e0e0e0", "& .MuiLinearProgress-bar": { backgroundColor: progressColor } }}
+          />
+        </Box>
+
+        <div className={styles.grid}>
+          <Grid item className={styles.dataBox}>
+            <Typography variant="body2" color="textSecondary">
+              Porcentaje de Comisión
+            </Typography>
+            <Typography variant="h5" className={styles.highlight}>
+              {commissionRate}%
+            </Typography>
           </Grid>
-          <Grid item xs={6}>
-            <Typography variant="body2" color="textSecondary">Comisión Ganada</Typography>
-            <Typography variant="h6">${commissionEarned}</Typography>
+
+          <Grid item className={styles.dataBox}>
+            <Typography variant="body2" color="textSecondary">
+              Comisión Ganada
+            </Typography>
+            <Typography variant="h5" className={styles.highlight}>
+              ${earnedCommission}
+            </Typography>
           </Grid>
-        </Grid>
+        </div>
       </CardContent>
     </Card>
   );
