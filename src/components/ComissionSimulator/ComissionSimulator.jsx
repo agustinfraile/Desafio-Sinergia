@@ -1,31 +1,35 @@
 import { useState } from "react";
-import ComissionForm from "../ComissionForm/ComissionForm"
-import ProgressSection from "../ProgressSection/ProgressSection";
-import NavigationHeader from "../NavigationHeader/NavigationHeader";
 import { Container } from "@mui/material";
 import ObjectivesSection from "../ObjectiveSection/ObjectiveSection";
 import ActionPlanPanel from "../ActionPlanPanel/ActionPlanPanel";
-
-
-import styles from "./ComissionSimulator.module.css";
+import NavigationHeader from "../NavigationHeader/NavigationHeader";
+import ProgressSection from "../ProgressSection/ProgressSection";
+import ComissionForm from "../ComissionForm/ComissionForm";
+import styles from "./ComissionSimulator.module.css"; // Importa los estilos
 
 export const ComissionSimulator = () => {
+  const getCurrentMonth = () => {
+    const months = [
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+    return months[new Date().getMonth()];
+  };
 
   const [activeSection, setActiveSection] = useState("data");
   const [showAllSections, setShowAllSections] = useState(false);
   const [userData, setUserData] = useState({
     name: "",
-    month: "Marzo",
+    month: getCurrentMonth(),
     avgTicket: 100,
     exchangeRate: 1,
     currentSales: 0,
     monthlyGoal: 10000,
-    commissionRate: 15, // Valor en %
+    commissionRate: 15,
   });
 
   return (
     <Container maxWidth="sm" className={styles.container}>
-      {/* Navbar */}
       <NavigationHeader
         activeSection={activeSection}
         setActiveSection={setActiveSection}
@@ -33,25 +37,23 @@ export const ComissionSimulator = () => {
         setShowAllSections={setShowAllSections}
       />
 
-      {/* Contenido dinámico basado en la sección activa */}
       <div className={styles.contentWrapper}>
         {showAllSections ? (
           <>
-            <ComissionForm onUpdateUserData={setUserData} />
-            <ProgressSection userData={userData} />
-            <ObjectivesSection userData={userData} />
-            <ActionPlanPanel />
+            <ComissionForm onUpdateUserData={setUserData} setActiveSection={setActiveSection} className={styles.card} />
+            <ProgressSection userData={userData} className={styles.card} />
+            <ObjectivesSection userData={userData} className={styles.card} />
+            <ActionPlanPanel className={styles.card} />
           </>
         ) : (
           <>
-            {activeSection === "data" && <ComissionForm onUpdateUserData={setUserData} />}
-            {activeSection === "progress" && <ProgressSection userData={userData} />}
-            {activeSection === "objectives" && <ObjectivesSection userData={userData} />}
-            {activeSection === "plan" && <ActionPlanPanel />}
+            {activeSection === "data" && <ComissionForm onUpdateUserData={setUserData} setActiveSection={setActiveSection} className={styles.card} />}
+            {activeSection === "progress" && <ProgressSection userData={userData} className={styles.card} />}
+            {activeSection === "objectives" && <ObjectivesSection userData={userData} className={styles.card} />}
+            {activeSection === "plan" && <ActionPlanPanel className={styles.card} />}
           </>
         )}
       </div>
     </Container>
   );
 };
-
