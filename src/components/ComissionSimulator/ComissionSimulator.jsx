@@ -22,7 +22,7 @@ export const ComissionSimulator = () => {
       ? JSON.parse(savedData)
       : {
         name: "",
-        month: getCurrentMonth(),
+        month: getCurrentMonth ? getCurrentMonth() : "Enero",
         avgTicket: 100,
         exchangeRate: 1,
         currentSales: 0,
@@ -50,7 +50,7 @@ export const ComissionSimulator = () => {
       <div className={styles.contentWrapper}>
         {showAllSections ? (
           <>
-            <ComissionForm onUpdateUserData={setUserData} setActiveSection={setActiveSection} getCurrentMonth={getCurrentMonth} className={styles.card} />
+            <ComissionForm onUpdateUserData={setUserData} setActiveSection={setActiveSection}  className={styles.card} />
             <ProgressSection userData={userData} className={styles.card} />
             <ObjectivesSection userData={userData} className={styles.card} />
             <ActionPlanPanel userData={userData} className={styles.card} />

@@ -4,7 +4,15 @@ import { Calendar } from "lucide-react";
 import data from "../../data/data.json";
 import styles from "./ComissionForm.module.css";
 
-const ComissionForm = ({ onUpdateUserData, setActiveSection, getCurrentMonth }) => {
+const ComissionForm = ({ onUpdateUserData, setActiveSection }) => {
+
+    const getCurrentMonth = () => {
+        const months = [
+          "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+          "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        ];
+        return months[new Date().getMonth()];
+      };
 
     const [userData, setUserData] = useState(() => {
         const savedData = localStorage.getItem("userData");
@@ -12,7 +20,7 @@ const ComissionForm = ({ onUpdateUserData, setActiveSection, getCurrentMonth }) 
             ? JSON.parse(savedData)
             : {
                 name: "",
-                month: getCurrentMonth(),
+                month: getCurrentMonth ? getCurrentMonth() : "Enero",
                 avgTicket: 100,
                 exchangeRate: 1,
                 currentSales: 0,
